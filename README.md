@@ -9,6 +9,10 @@ Taskzenia is a modern task management web application built to help you organize
 
 Explore task management, categories, priorities, and the customizable focus timer.
 
+## 📸 Preview
+
+![Taskzenia Dashboard](screenshots/taskzenia-dashboard.png)
+
 ## ✨ Features
 
 - **Task Management** — Create, edit, complete, and delete tasks.
