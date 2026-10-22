@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Taskzenia
 
-## Getting Started
+**Plan smarter. Focus deeper. Get things done.**
 
-First, run the development server:
+Taskzenia is a modern task management web application built to help you organize daily work, prioritize tasks, and stay focused with a customizable focus timer.
+
+## ✨ Features
+
+- **Task Management** — Create, edit, complete, and delete tasks.
+- **Categories** — Organize tasks into Work, Personal, Study, and Health.
+- **Priorities & Due Dates** — Keep important tasks visible and track deadlines.
+- **Search & Filters** — Find tasks by keyword, category, or priority.
+- **Task Views** — Switch between Overview, Today, Upcoming, and Completed.
+- **Focus Timer** — Choose preset focus sessions or customize the duration.
+- **Local Persistence** — Tasks are saved in your browser using local storage.
+- **Dark Futuristic UI** — A modern interface with violet and cyan accents.
+
+## 🛠️ Tech Stack
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Install Node.js and npm before starting.
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/aryanpaltech/taskzenia.git
+cd taskzenia
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🗺️ Roadmap
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Planned improvements may include:
 
-## Learn More
+- Calendar view
+- Productivity analytics
+- Automated testing and code quality checks
+- Further accessibility and responsive design improvements
 
-To learn more about Next.js, take a look at the following resources:
+## 💾 Data Storage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The current version stores tasks in the browser's local storage. Tasks do not automatically sync between browsers or devices.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Contributions
 
-## Deploy on Vercel
+Suggestions and feedback are welcome. Please open an issue to discuss a proposed improvement before making substantial changes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No license has been specified yet. All rights are reserved by default unless a license is added. Please contact the repository owner before redistributing or reusing this code.
+
+---
+
+**Built with Next.js and TypeScript.**
