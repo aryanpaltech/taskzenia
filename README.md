@@ -3,6 +3,11 @@
 **Plan smarter. Focus deeper. Get things done.**
 
 Taskzenia is a modern task management web application built to help you organize daily work, prioritize tasks, and stay focused with a customizable focus timer.
+## 🌐 Live Demo
+
+**Try Taskzenia:** [Open the live app](https://taskzenia.vercel.app/)
+
+Explore task management, categories, priorities, and the customizable focus timer.
 
 ## ✨ Features
 
