@@ -107,6 +107,8 @@ export default function Home() {
   const [category, setCategory] = useState<Category>("Work");
   const [priority, setPriority] = useState<Priority>("Medium");
   const [dueDate, setDueDate] = useState("");
+  const [selectedDuration, setSelectedDuration] = useState(25);
+  const [customMinutes, setCustomMinutes] = useState("25");
   const [focusSeconds, setFocusSeconds] = useState(25 * 60);
   const [timerRunning, setTimerRunning] = useState(false);
   const [focusMode, setFocusMode] = useState(false);
@@ -272,9 +274,27 @@ const [today, setToday] = useState("");
     setNotice("Your task list is now clear.");
   }
 
+  function chooseDuration(minutes: number) {
+    const safeMinutes = Math.min(180, Math.max(1, Math.floor(minutes)));
+    setTimerRunning(false);
+    setSelectedDuration(safeMinutes);
+    setCustomMinutes(String(safeMinutes));
+    setFocusSeconds(safeMinutes * 60);
+    setNotice(`Focus timer set to ${safeMinutes} minute${safeMinutes === 1 ? "" : "s"}.`);
+  }
+
+  function applyCustomDuration() {
+    const minutes = Number(customMinutes);
+    if (!Number.isFinite(minutes) || !Number.isInteger(minutes) || minutes < 1 || minutes > 180) {
+      setNotice("Enter a whole number from 1 to 180 minutes.");
+      return;
+    }
+    chooseDuration(minutes);
+  }
+
   function resetTimer() {
     setTimerRunning(false);
-    setFocusSeconds(25 * 60);
+    setFocusSeconds(selectedDuration * 60);
   }
 
   const timerDisplay = `${String(Math.floor(focusSeconds / 60)).padStart(2, "0")}:${String(focusSeconds % 60).padStart(2, "0")}`;
@@ -488,11 +508,58 @@ const [today, setToday] = useState("");
                     </div>
                   </div>
                 </div>
+
+                <div className="relative mb-4">
+                  <div className="mb-2 text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">Session length</div>
+                  <div className="grid grid-cols-5 gap-1.5">
+                    {[15, 25, 30, 45, 60].map((minutes) => (
+                      <button
+                        key={minutes}
+                        type="button"
+                        disabled={timerRunning}
+                        onClick={() => chooseDuration(minutes)}
+                        className={`rounded-lg border px-1 py-2 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${selectedDuration === minutes ? "border-violet-400/40 bg-violet-500/20 text-violet-200" : "border-white/[0.08] bg-black/10 text-slate-400 hover:border-violet-400/30 hover:text-white"}`}
+                      >
+                        {minutes}m
+                      </button>
+                    ))}
+                  </div>
+                  <form
+                    className="mt-3 flex gap-2"
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                      applyCustomDuration();
+                    }}
+                  >
+                    <label htmlFor="custom-focus-minutes" className="sr-only">Custom focus duration in minutes</label>
+                    <input
+                      id="custom-focus-minutes"
+                      type="number"
+                      min="1"
+                      max="180"
+                      step="1"
+                      value={customMinutes}
+                      disabled={timerRunning}
+                      onChange={(event) => setCustomMinutes(event.target.value)}
+                      placeholder="Custom minutes (1–180)"
+                      className="min-w-0 flex-1 rounded-lg border border-white/[0.08] bg-black/20 px-3 py-2 text-xs text-slate-200 outline-none placeholder:text-slate-600 focus:border-violet-400/50 disabled:opacity-50"
+                    />
+                    <button
+                      type="submit"
+                      disabled={timerRunning}
+                      className="rounded-lg border border-violet-400/20 px-3 py-2 text-xs font-semibold text-violet-200 transition hover:bg-violet-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      Apply
+                    </button>
+                  </form>
+                  <p className="mt-2 text-center text-[10px] text-slate-600">Choose a preset or enter 1–180 minutes. Pause to change duration.</p>
+                </div>
+
                 <div className="relative flex gap-2">
-                  <button onClick={() => { if (focusSeconds === 0) setFocusSeconds(25 * 60); setTimerRunning((running) => !running); }} className="flex-1 rounded-xl bg-violet-500 px-4 py-3 text-sm font-bold text-white transition hover:bg-violet-400">{timerRunning ? "Ⅱ  Pause session" : "▶  Start focus"}</button>
+                  <button onClick={() => { if (focusSeconds === 0) setFocusSeconds(selectedDuration * 60); setTimerRunning((running) => !running); }} className="flex-1 rounded-xl bg-violet-500 px-4 py-3 text-sm font-bold text-white transition hover:bg-violet-400">{timerRunning ? "Ⅱ  Pause session" : "▶  Start focus"}</button>
                   <button onClick={resetTimer} aria-label="Reset focus timer" className="rounded-xl border border-white/10 px-4 text-slate-400 transition hover:bg-white/5 hover:text-white">↺</button>
                 </div>
-                <p className="relative mt-3 text-center text-xs text-slate-600">A simple 25-minute focus session.</p>
+                <p className="relative mt-3 text-center text-xs text-slate-600">{selectedDuration}-minute focus session{timerRunning ? " in progress" : ""}.</p>
               </div>
 
               <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5 sm:p-6">
