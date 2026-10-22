@@ -11,7 +11,7 @@ Explore task management, categories, priorities, and the customizable focus time
 
 ## 📸 Preview
 
-![Taskzenia Dashboard](screenshots/taskzenia-dashboard.png)
+![Taskzenia Dashboard](taskzenia-dashboard.png)
 
 ## ✨ Features
 
