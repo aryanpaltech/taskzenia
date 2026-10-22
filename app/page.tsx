@@ -113,23 +113,31 @@ export default function Home() {
   const [timerRunning, setTimerRunning] = useState(false);
   const [focusMode, setFocusMode] = useState(false);
   const [notice, setNotice] = useState("");
-
-useEffect(() => {
-  setToday(todayString());
-}, []);
+  const [today, setToday] = useState("");
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) setTasks(parsed);
-      }
-    } catch {
-      // Start with demo tasks if stored data cannot be read.
-    }
-    setLoaded(true);
+    // Set the local date after hydration to avoid server/client date mismatches.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setToday(todayString());
   }, []);
+
+  useEffect(() => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (saved) {
+      const parsed = JSON.parse(saved);
+
+      // Restore saved tasks after the component mounts.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (Array.isArray(parsed)) setTasks(parsed);
+    }
+  } catch {
+    // Keep the demo tasks if stored data cannot be read.
+  }
+
+  setLoaded(true);
+}, []);
 
   useEffect(() => {
     if (!loaded) return;
@@ -156,7 +164,6 @@ useEffect(() => {
     return () => window.clearInterval(interval);
   }, [timerRunning]);
 
-const [today, setToday] = useState("");
 
   const completedCount = tasks.filter((task) => task.completed).length;
   const remainingCount = tasks.length - completedCount;
@@ -589,7 +596,7 @@ const [today, setToday] = useState("");
                 <div className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Quick actions</div>
                 <div className="grid grid-cols-2 gap-3">
                   <button onClick={() => { setShowForm(true); setEditingId(null); setTitle(""); setCategory("Study"); }} className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-3 text-left transition hover:border-violet-400/30 hover:bg-violet-400/[0.05]"><div className="mb-2 text-lg text-violet-300">＋</div><div className="text-xs font-semibold">New task</div><div className="mt-1 text-[10px] text-slate-600">Capture an idea</div></button>
-                  <button onClick={() => { setActiveView("today"); setCategoryFilter("All"); setPriorityFilter("All"); setSearch(""); }} className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-3 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.05]"><div className="mb-2 text-lg text-cyan-300">◷</div><div className="text-xs font-semibold">Today's view</div><div className="mt-1 text-[10px] text-slate-600">See your agenda</div></button>
+                  <button onClick={() => { setActiveView("today"); setCategoryFilter("All"); setPriorityFilter("All"); setSearch(""); }} className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-3 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.05]"><div className="mb-2 text-lg text-cyan-300">◷</div><div className="text-xs font-semibold">Today&apos;s view</div><div className="mt-1 text-[10px] text-slate-600">See your agenda</div></button>
                   <button onClick={() => { setActiveView("completed"); setCategoryFilter("All"); setPriorityFilter("All"); setSearch(""); }} className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-3 text-left transition hover:border-emerald-400/30 hover:bg-emerald-400/[0.05]"><div className="mb-2 text-lg text-emerald-300">✓</div><div className="text-xs font-semibold">Achievements</div><div className="mt-1 text-[10px] text-slate-600">Review your wins</div></button>
                   <button onClick={() => { setSearch(""); setCategoryFilter("All"); setPriorityFilter("All"); setActiveView("all"); }} className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-3 text-left transition hover:border-amber-400/30 hover:bg-amber-400/[0.05]"><div className="mb-2 text-lg text-amber-300">⌕</div><div className="text-xs font-semibold">Reset filters</div><div className="mt-1 text-[10px] text-slate-600">See everything</div></button>
                 </div>
